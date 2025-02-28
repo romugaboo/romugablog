@@ -1,0 +1,57 @@
+<%-include('../../partials/header')%>
+
+<%-include('../../partials/admin-navbar')%>
+
+<div class="container my-4 container-wide">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="text-center">Edit Article</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/articles/admin/update">
+
+                <input type="hidden" name="id" value="<%=article.id%>">
+                <input type="text" name="title" id="title" class="form-control"  
+                    value="<%=article.title%>" placeholder="Define a title">
+                <select name="category" id="category" class="form-control my-3">
+                    <% categories.forEach((category) => { %>
+                        <% if(category.id == article.categoryId) { %>
+                            <option value="<%=category.id%>" selected><%=category.title%></option>
+                        <% } else { %>
+                            <option value="<%=category.id%>"><%=category.title%></option>
+                        <% }  %>
+                    <% }) %>
+                </select>
+                <textarea class="form-control" name="body" id="article"
+                    placeholder="Write your Article here. . ." value=""
+                ><%=article.body%></textarea>
+                <button class="btn btn-primary mt-3">Save Changes</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="content" style="display: none;">
+    <%-article.body%>
+</div>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#article',
+        // language: 'pt_BR', 
+        // language: 'ja',
+        plugins: [`
+            advlist autolink link image lists print 
+            preview hr save searchreplace wordcount 
+            fullscreen insertdatetime media table paste emoticons
+            `
+        ],
+        init_instance_callback: () => {
+            tinymce.get('article').setContent($('#content').html())
+        }
+    });
+</script>
+
+<%-include('../../partials/footer')%>

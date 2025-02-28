@@ -1,0 +1,55 @@
+<%-include('../../partials/header')%>
+
+<%-include('../../partials/admin-navbar')%>
+
+<div class="container my-4 container-wide">
+    <h2 class="text-center">Articles</h2>
+    <hr>
+    <a href="/articles/admin/new" class="btn btn-success">Create a new Article</a>
+    <div class="card my-3">
+        <table class="table table-striped">
+            <thead class="table-content">
+            <tr>
+                <th>Id</th>
+                <th>Título</th>
+                <th>Slug</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+            <% articles.forEach((article) => { %>
+                <tr class="table-content">
+                    <td><%=article.id%></td>
+                    <td><%=article.title%></td>
+                    <td><%=article.slug%></td>
+                    <td><%=article['category.title']%></td>
+                    <td class="d-flex flex-nowrap">
+                        <a href="/articles/admin/edit/<%=article.id%>" type="submit" 
+                        class="btn btn-sm btn-warning mr-1">
+                            Edit
+                        </a>
+                        <form method="POST" action="/articles/admin/delete" 
+                        style="display: inline;" onsubmit="confirmDelection(event, this)">
+                            <input type="hidden" value="<%=article.id%>" name="id" >
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</a>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
+</div>
+
+<%-include('../../partials/footer')%>
+
+<script>
+    function confirmDelection(event, form) {
+        event.preventDefault()
+        const decisao = confirm('Tem certeza que deseja deletar este artigo?')
+        if(decisao) {
+            form.submit();
+        }
+    }
+</script>

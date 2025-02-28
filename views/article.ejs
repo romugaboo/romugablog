@@ -1,0 +1,19 @@
+<%-include('partials/header')%>
+
+<%-include('./partials/navbar')%>
+
+<body>
+    <div class="container my-4 container-meddium">
+        <div class="card">
+            <div class="card-header">
+                <h3><%=article.title%></h3>
+                <p class="text-right"><%=article.category.title%></p>
+            </div>
+            <div class="card-body">
+                <%-article.body%>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%-include('partials/footer')%>

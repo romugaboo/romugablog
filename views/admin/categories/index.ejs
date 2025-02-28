@@ -1,0 +1,53 @@
+<%-include('../../partials/header')%>
+
+<%-include('../../partials/admin-navbar')%>
+
+<div class="container my-4 container-narrow">
+    <h2 class="text-center">Categories</h2>
+    <hr>
+    <a href="/categories/admin/new" class="btn btn-success">Add Category</a>
+    <div class="card my-3">
+        <table class="table table-striped">
+            <thead class="table-content">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% categories.forEach((category) => { %>
+                <tr class="table-content">
+                    <td><%=category.id%></td>
+                    <td><%=category.title%></td>
+                    <td><%=category.slug%></td>
+                    <td>
+                        <a href="/categories/admin/edit/<%=category.id%>" type="submit" 
+                        class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+                        <form method="POST" action="/categories/admin/delete" 
+                        style="display: inline;" onsubmit="confirmDelection(event, this)">
+                            <input type="hidden" value="<%=category.id%>" name="id" >
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</a>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%-include('../../partials/footer')%>
+
+<script>
+    function confirmDelection(event, form) {
+        event.preventDefault()
+        const decisao = confirm('Are you sure you Want to Delete this Category?')
+        if(decisao) {
+            form.submit();
+        }
+    }
+</script>
